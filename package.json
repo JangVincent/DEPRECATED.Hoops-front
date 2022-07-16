@@ -1,4 +1,5 @@
 {
+  "homepage": "https://jangluna.github.io/react_playground",
   "name": "react_playground",
   "version": "0.1.0",
   "private": true,
@@ -37,7 +38,6 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://jangluna.github.io/react-playground",
   "devDependencies": {
     "gh-pages": "^4.0.0"
   }
