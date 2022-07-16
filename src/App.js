@@ -64,24 +64,14 @@ class App extends React.Component {
             Edit <code>src/App.js</code> and save to reload. React will be
             automatically compiles.
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+
+          <Table
+            characterData={this.state.characters}
+            removeCharacter={this.removeCharacter}
+          />
+
+          <Form handleSubmit={this.handleSubmit} />
         </header>
-
-        <Table
-          characterData={this.state.characters}
-          removeCharacter={this.removeCharacter}
-        />
-
-        <Form handleSubmit={this.handleSubmit} />
-
-        <ul>{data}</ul>
       </div>
     );
   }
