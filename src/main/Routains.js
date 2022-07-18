@@ -46,13 +46,13 @@ class Routains extends React.Component {
   ];
   render() {
     return (
-      <div className="relative grid overflow-hidden h-screen bg-zinc-600 mx-4 rounded grid-cols-5">
+      <div className="relative grid overflow-hidden h-full bg-zinc-600 mx-6 rounded grid-cols-5 mt-10 pb-10 pt-10">
         {this.routains.map((v, index) => {
           return (
             <Link
               to="/"
               key={index}
-              className="rounded overflow-hidden shadow-lg mt-5 bg-zinc-900 mr-10 ml-10 h-fit hover:bg-zinc-800 focus:outline-none hover:cursor-pointer"
+              className="rounded overflow-hidden shadow-lg bg-zinc-900 mr-10 ml-10 h-fit hover:bg-zinc-800 focus:outline-none hover:cursor-pointer"
             >
               <img className="w-full" src={v.coverImg} />
               <div className="px-10 py-4">
