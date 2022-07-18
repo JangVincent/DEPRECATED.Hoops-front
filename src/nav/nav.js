@@ -83,7 +83,7 @@ class NavBar extends React.Component {
                   <li className="nav-item">
                     <a
                       className="px-3 py-1 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                      href="/atoms"
+                      href="/signin"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
