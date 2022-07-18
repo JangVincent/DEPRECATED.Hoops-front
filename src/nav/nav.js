@@ -1,9 +1,5 @@
 import React from "react";
 
-// import { Fragment } from "react";
-// import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { BellIcon, LoginIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
-
 class NavBar extends React.Component {
   state = {
     navigation: [
@@ -25,9 +21,7 @@ class NavBar extends React.Component {
     console.log(this.state.current);
   }
 
-  componentDidMount() {
-    console.log("new");
-  }
+  componentDidMount() {}
 
   movePage(name) {
     if (name !== "Introduction") {
