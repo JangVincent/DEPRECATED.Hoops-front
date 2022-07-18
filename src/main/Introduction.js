@@ -8,7 +8,7 @@ class Introduction extends React.Component {
         <div className="pt-16 pb-80 sm:pt-24 sm:pb-40 lg:pt-40 lg:pb-48 bg-zinc-600 rounded">
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 sm:static">
             <div className="sm:max-w-lg">
-              <h1 className="text-4xl font font-extrabold tracking-tight text-zinc-300 sm:text-6xl">
+              <h1 className="text-4xl font font-extrabold tracking-tight text-zinc-100 sm:text-6xl">
                 Keep your routain with Routainer
               </h1>
               <p className="mt-4 text-xl text-zinc-400">
