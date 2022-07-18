@@ -1,4 +1,5 @@
 import React from "react";
+import { SearchIcon } from "@heroicons/react/outline";
 
 class Atoms extends React.Component {
   state = {
@@ -31,17 +32,18 @@ class Atoms extends React.Component {
   render() {
     return (
       <div className="Atoms relative overflow-hidden bg-zinc-600 mx-6 rounded mt-10 pb-10 pt-10">
-        <div className="flex ml-10 w-80 border-b border-zinc-800 py-2">
+        <div className="flex ml-10 w-80 border-b border-zinc-800 py-2 pr-1">
           <input
-            className="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 leading-tight focus:outline-none text-base"
+            className="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 pl-1 leading-tight focus:outline-none text-base"
             placeholder="Search Atom Name"
             onChange={(e) => {
               this.filterAtomList(e);
             }}
           ></input>
+          <SearchIcon className="h-6 w-6 text-zinc-300"></SearchIcon>
         </div>
 
-        <p className="mt-10 text-zinc-900 font-bold text-xl text-left ml-10">
+        <p className="mt-10 text-zinc-300 font-bold text-xl text-left ml-10">
           MUST TO DO :
         </p>
         <div className="grid grid-cols-4">
@@ -58,7 +60,7 @@ class Atoms extends React.Component {
           ))}
         </div>
 
-        <p className="mt-5 text-zinc-900 font-bold text-xl text-left ml-10">
+        <p className="mt-5 text-zinc-300 font-bold text-xl text-left ml-10">
           WANT TO DO :
         </p>
         <div className="grid grid-cols-4">

@@ -60,7 +60,7 @@ class NavBar extends React.Component {
                     return (
                       <li className="nav-item" key={index}>
                         <Link
-                          className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                          className="px-3 py-1 flex items-center text-sm uppercase font-bold leading-snug text-white hover:opacity-75"
                           to={
                             this.state.loggedIn
                               ? this.pageNameFilter(value.name)
@@ -75,7 +75,7 @@ class NavBar extends React.Component {
 
                   <li className="nav-item">
                     <Link
-                      className="px-3 py-1 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                      className="px-3 py-0.5 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                       to="/signin"
                     >
                       <svg
