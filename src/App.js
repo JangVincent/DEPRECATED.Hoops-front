@@ -2,6 +2,16 @@ import logo from "./logo.svg";
 import "./App.css";
 import React from "react";
 
+/* Components */
+import Navbar from "./nav/nav";
+
+import Introduction from "./main/Introduction";
+import Routains from "./main/Routains";
+import Atoms from "./main/Atoms";
+
+/* Libraries */
+import { Routes, Route, Link } from "react-router-dom";
+
 class App extends React.Component {
   state = {};
 
@@ -25,7 +35,6 @@ class App extends React.Component {
     await fetch(url)
       .then((result) => result.json())
       .then((result) => {
-        console.log(result);
         this.setState({
           data: result.map((v, i) => <li key={i}>{v.toString() + "\n"}</li>),
         });
@@ -36,15 +45,12 @@ class App extends React.Component {
     const data = this.state.data;
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload. React will be
-            automatically compiles.
-          </p>
-
-          <ul>{data}</ul>
-        </header>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Introduction />}></Route>
+          <Route path="/routains" element={<Routains />}></Route>
+          <Route path="/atoms" element={<Atoms />}></Route>
+        </Routes>
       </div>
     );
   }
