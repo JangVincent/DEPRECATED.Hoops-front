@@ -7,12 +7,13 @@ import { BellIcon, LoginIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 class NavBar extends React.Component {
   state = {
     navigation: [
-      { name: "Introduction", href: "/" },
-      { name: "Routains", href: "/routains" },
-      { name: "Atoms", href: "/atoms" },
+      { name: "Introduction" },
+      { name: "Routains" },
+      { name: "Atoms" },
     ],
 
     current: "Introduction",
+    loggedIn: true,
   };
 
   classNames(...classes) {
@@ -26,6 +27,18 @@ class NavBar extends React.Component {
 
   componentDidMount() {
     console.log("new");
+  }
+
+  movePage(name) {
+    if (name !== "Introduction") {
+      if (this.state.loggedIn) {
+        window.location.href = `/` + name.toLowerCase();
+      } else {
+        window.location.href = "/signin";
+      }
+    } else {
+      window.location.href = `/`;
+    }
   }
 
   render() {
@@ -55,7 +68,23 @@ class NavBar extends React.Component {
                 id="example-navbar-info"
               >
                 <ul className="flex flex-col lg:flex-row list-none ml-auto">
-                  <li className="nav-item">
+                  {this.state.navigation.map((value, index) => {
+                    return (
+                      <li className="nav-item" key={index}>
+                        <a
+                          className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                          href="/"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            this.movePage(value.name);
+                          }}
+                        >
+                          {value.name}
+                        </a>
+                      </li>
+                    );
+                  })}
+                  {/* <li className="nav-item">
                     <a
                       className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                       href="/"
@@ -78,7 +107,7 @@ class NavBar extends React.Component {
                     >
                       Atoms
                     </a>
-                  </li>
+                  </li> */}
 
                   <li className="nav-item">
                     <a
