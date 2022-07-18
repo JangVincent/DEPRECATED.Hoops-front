@@ -1,30 +1,9 @@
 import logo from "./logo.svg";
 import "./App.css";
-import Table from "./Table";
 import React from "react";
-import Form from "./Form";
 
 class App extends React.Component {
-  state = {
-    characters: [
-      {
-        name: "Charlie",
-        job: "Janitor",
-      },
-      {
-        name: "Mac",
-        job: "Bouncer",
-      },
-      {
-        name: "Dee",
-        job: "Aspring actress",
-      },
-      {
-        name: "Dennis",
-        job: "Bartender",
-      },
-    ],
-  };
+  state = {};
 
   removeCharacter = (index) => {
     const { characters } = this.state;
@@ -48,14 +27,13 @@ class App extends React.Component {
       .then((result) => {
         console.log(result);
         this.setState({
-          data: result,
+          data: result.map((v, i) => <li key={i}>{v.toString() + "\n"}</li>),
         });
       });
   }
 
   render() {
     const data = this.state.data;
-
     return (
       <div className="App">
         <header className="App-header">
@@ -65,12 +43,7 @@ class App extends React.Component {
             automatically compiles.
           </p>
 
-          <Table
-            characterData={this.state.characters}
-            removeCharacter={this.removeCharacter}
-          />
-
-          <Form handleSubmit={this.handleSubmit} />
+          <ul>{data}</ul>
         </header>
       </div>
     );
