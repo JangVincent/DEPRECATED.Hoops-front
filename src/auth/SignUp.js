@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 class SignUp extends React.Component {
   render() {
@@ -62,12 +63,12 @@ class SignUp extends React.Component {
           <p className="mt-8 text-xs font-light text-center text-gray-200">
             {" "}
             Do you have an account?{" "}
-            <a
-              href="/signin"
+            <Link
+              to="/signin"
               className="font-medium text-zinc-600 hover:text-zinc-200"
             >
               Sign In
-            </a>
+            </Link>
           </p>
         </div>
       </div>

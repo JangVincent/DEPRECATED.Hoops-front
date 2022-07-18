@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 class SignIn extends React.Component {
   render() {
@@ -18,7 +19,8 @@ class SignIn extends React.Component {
               </label>
               <input
                 type="email"
-                className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-zinc-400 focus:ring-zinc-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                className="block w-full px-4 py-2 mt-2 text-zinc-700 bg-white border rounded-md focus:border-zinc-400 focus:ring-zinc-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                placeholder="email@example.com"
               />
             </div>
             <div className="mb-2">
@@ -30,7 +32,8 @@ class SignIn extends React.Component {
               </label>
               <input
                 type="password"
-                className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-zinc-400 focus:ring-zinc-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                className="block w-full px-4 py-2 mt-2 text-zinc-700 bg-white border rounded-md focus:border-zinc-400 focus:ring-zinc-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                placeholder="Your password"
               />
             </div>
             <a href="#" className="text-xs text-zinc-500 hover:text-zinc-200">
@@ -47,12 +50,12 @@ class SignIn extends React.Component {
           <p className="mt-8 text-xs font-light text-center text-gray-200">
             {" "}
             Don't have an account?{" "}
-            <a
-              href="/signup"
+            <Link
+              to="/signup"
               className="font-medium text-zinc-600 hover:text-zinc-200"
             >
               Sign up
-            </a>
+            </Link>
           </p>
         </div>
       </div>

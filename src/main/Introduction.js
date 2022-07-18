@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 class Introduction extends React.Component {
   render() {
@@ -15,12 +16,12 @@ class Introduction extends React.Component {
                 creativity, efficiency. The Routainer is will be fit your daily
                 routain management.
               </p>
-              <a
-                href="/login"
+              <Link
+                to="/signin"
                 className="inline-block text-center bg-zinc-900 border border-transparent rounded-md py-3 px-8 font-medium text-white hover:bg-zinc-800 mt-10"
               >
-                Go to Make Routain
-              </a>
+                Go to make Routain
+              </Link>
             </div>
             <div>
               <div className="mt-10">

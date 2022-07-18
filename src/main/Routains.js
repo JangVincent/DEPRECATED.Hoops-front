@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 class Routains extends React.Component {
   routains = [
@@ -48,10 +49,14 @@ class Routains extends React.Component {
       <div className="relative grid overflow-hidden h-screen bg-zinc-600 mx-4 rounded grid-cols-5">
         {this.routains.map((v, index) => {
           return (
-            <div className="rounded overflow-hidden shadow-lg mt-5 bg-zinc-900 mr-10 ml-10 h-fit">
-              <img className="w-full" src={v.coverImg} alt="Mountain" />
+            <Link
+              to="/"
+              key={index}
+              className="rounded overflow-hidden shadow-lg mt-5 bg-zinc-900 mr-10 ml-10 h-fit hover:bg-zinc-800 focus:outline-none hover:cursor-pointer"
+            >
+              <img className="w-full" src={v.coverImg} />
               <div className="px-10 py-4">
-                <div className="font-bold text-xl mb-2 text-zinc-400">
+                <div className="font-bold text-xl mb-2 text-zinc-300">
                   {v.name}
                 </div>
                 <p className="text-gray-500 text-base text-left">
@@ -73,7 +78,7 @@ class Routains extends React.Component {
                   #winter
                 </span> */}
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>
