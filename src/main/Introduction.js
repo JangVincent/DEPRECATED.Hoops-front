@@ -13,7 +13,7 @@ class Introduction extends React.Component {
               </h1>
               <p className="mt-4 text-xl text-zinc-400">
                 Many peoples consider about daily routain for their health,
-                creativity, efficiency. The Routainer is will be fit your daily
+                creativity, efficiency. The Hoops is will be fit your daily
                 routain management.
               </p>
               <Link
