@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Introduction() {
+  const loggedIn = useSelector((state) => state.loggedIn.value);
+
   return (
     <div className="relative bg-black overflow-hidden px-6 mt-10">
       <div className="pt-16 pb-80 sm:pt-24 sm:pb-40 lg:pt-40 lg:pb-48 bg-zinc-600 rounded">
@@ -16,7 +19,7 @@ export default function Introduction() {
               routain management.
             </p>
             <Link
-              to="/signin"
+              to={loggedIn ? "/routains/" : "/signin"}
               className="inline-block text-center bg-zinc-900 border border-transparent rounded-md py-3 px-8 font-medium text-white hover:bg-zinc-800 mt-10"
             >
               Go to make Routain

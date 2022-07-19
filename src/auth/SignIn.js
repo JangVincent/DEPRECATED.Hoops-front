@@ -1,11 +1,17 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import packageJson from "../../package.json";
 import Modal from "../commons/Modal";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { login } from "./loggedInSlice";
 
 export default function SignIn() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const navigation = useNavigate();
+
+  const loggedIn = useSelector((state) => state.loggedIn.value);
+  const dispatch = useDispatch();
 
   const [id, setId] = useState("");
   const [passcode, setPasscode] = useState("");
@@ -14,29 +20,32 @@ export default function SignIn() {
   const [modalHeader, setModalHeader] = useState("");
   const [modalBody, setModalBody] = useState("");
 
-  const login = () => {
+  const tryLogin = () => {
     // const emailReg =
     //   /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-    // if (!emailReg.test(this.state.id)) {
-    //   this.setState({ modalHeader: "Error Occured!" });
-    //   this.setState({ modalBody: "Please Check your Email" });
-    //   this.setState({ modalOn: true });
+    // if (!emailReg.test(id)) {
+    //   setModalHeader("Error Occured!");
+    //   setModalBody("Please Check your email");
+    //   setModalOn(true);
     //   return;
     // }
 
     axios
       .post(packageJson.apiServer + "/auth/signin", {
-        id: this.state.id,
-        passcode: this.state.passcode,
+        id: id,
+        passcode: passcode,
       })
       .then((res) => {
-        window.sessionStorage.setItem("hoops-token", res.data.token);
-        setLoggedIn(true);
+        console.log(res.data.data.token);
+        window.sessionStorage.setItem("hoops-token", res.data.data.token);
+        dispatch(login());
+        navigation("/");
       })
       .catch((err) => {
-        setModalHeader({ modalHeader: "Error Occured!" });
-        setModalBody({ modalBody: err.response.data.message.join(", ") });
-        setModalOn({ modalOn: true });
+        console.log(err);
+        setModalHeader("Error Occured!");
+        setModalBody(err.response.data.message.join(", "));
+        setModalOn(true);
       });
   };
 
@@ -81,7 +90,7 @@ export default function SignIn() {
               className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-zinc-600 rounded-md hover:bg-zinc-400 hover:text-zinc-900 focus:outline-none focus:bg-zinc-600"
               onClick={(e) => {
                 e.preventDefault();
-                login();
+                tryLogin();
               }}
             >
               Sign in

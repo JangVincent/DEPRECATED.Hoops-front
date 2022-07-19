@@ -1,14 +1,21 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { login, logout } from "../auth/loggedInSlice";
 
 export default function NavBar() {
+  const loggedIn = useSelector((state) => state.loggedIn.value);
+  const dispatch = useDispatch();
+
   const [navigation, setNavigation] = useState([
     { name: "Introduction" },
     { name: "Routains" },
     { name: "Atoms" },
   ]);
 
-  const [loggedIn, setLoggedIn] = useState(true);
+  const tryLogout = () => {
+    dispatch(logout());
+  };
 
   // const classNames = (...classes) => {
   //   return classes.filter(Boolean).join(" ");
@@ -16,7 +23,16 @@ export default function NavBar() {
 
   const pageNameFilter = (name) => {
     let str = name.toLowerCase();
-    return str === "introduction" ? "/" : str;
+
+    if (str === "introduction") {
+      return "/";
+    } else {
+      if (loggedIn) {
+        return str;
+      } else {
+        return "/signin";
+      }
+    }
   };
 
   return (
@@ -50,7 +66,7 @@ export default function NavBar() {
                     <li className="nav-item" key={index}>
                       <Link
                         className="px-3 py-1 flex items-center text-sm uppercase font-bold leading-snug text-white hover:opacity-75"
-                        to={loggedIn ? pageNameFilter(value.name) : "/"}
+                        to={pageNameFilter(value.name)}
                       >
                         {value.name}
                       </Link>
@@ -58,26 +74,74 @@ export default function NavBar() {
                   );
                 })}
 
-                <li className="nav-item">
-                  <Link
-                    className="px-3 py-0.5 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                    to="/signin"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2"
+                {loggedIn ? (
+                  <li className="nav-item">
+                    <Link
+                      className="px-3 py-0.5 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                      to="/setting"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
-                      />
-                    </svg>
-                  </Link>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                        />
+                      </svg>
+                    </Link>
+                  </li>
+                ) : (
+                  ""
+                )}
+
+                <li className="nav-item">
+                  {loggedIn === false ? (
+                    <Link
+                      className="px-3 py-0.5 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                      to="/signin"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                        />
+                      </svg>
+                    </Link>
+                  ) : (
+                    <span
+                      className="px-3 py-0.5 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                      onClick={() => tryLogout()}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                        />
+                      </svg>
+                    </span>
+                  )}
                 </li>
               </ul>
             </div>
