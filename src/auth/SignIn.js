@@ -1,7 +1,58 @@
+import axios from "axios";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Route, useHref } from "react-router-dom";
+import packageJson from "../../package.json";
+import Modal from "../commons/Modal";
 
 class SignIn extends React.Component {
+  state = {
+    id: "",
+    passcode: "",
+
+    modalOn: false,
+    modalHeader: "Error",
+    modalBody: "Error occured",
+
+    loggedIn: false,
+  };
+
+  componentDidMount() {
+    console.log("mount");
+  }
+
+  setId(id) {
+    this.setState({ id: id });
+  }
+
+  setPasscode(passcode) {
+    this.setState({ passcode: passcode });
+  }
+
+  login() {
+    // const emailReg =
+    //   /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    // if (!emailReg.test(this.state.id)) {
+    //   this.setState({ modalHeader: "Error Occured!" });
+    //   this.setState({ modalBody: "Please Check your Email" });
+    //   this.setState({ modalOn: true });
+    //   return;
+    // }
+
+    axios
+      .post(packageJson.apiServer + "/auth/signin", {
+        id: this.state.id,
+        passcode: this.state.passcode,
+      })
+      .then((res) => {
+        window.sessionStorage.setItem("hoops-token", res.data.token);
+      })
+      .catch((err) => {
+        this.setState({ modalHeader: "Error Occured!" });
+        this.setState({ modalBody: err.response.data.message.join(", ") });
+        this.setState({ modalOn: true });
+      });
+  }
+
   render() {
     return (
       <div className="relative flex flex-col justify-center min-h-full overflow-hidden bg-zinc-600 mx-6 rounded mt-10 pb-20 pt-20">
@@ -11,36 +62,42 @@ class SignIn extends React.Component {
           </h1>
           <form className="mt-6">
             <div className="mb-2">
-              <label
-                for="email"
-                className="block text-sm font-semibold text-zinc-200"
-              >
+              <label className="block text-sm font-semibold text-zinc-200">
                 Email
               </label>
               <input
                 type="email"
                 className="block w-full px-4 py-2 mt-2 text-zinc-700 bg-white border rounded-md focus:border-zinc-400 focus:ring-zinc-300 focus:outline-none focus:ring focus:ring-opacity-40"
                 placeholder="email@example.com"
+                onChange={(e) => {
+                  this.setId(e.target.value);
+                }}
               />
             </div>
             <div className="mb-2">
-              <label
-                for="password"
-                className="block text-sm font-semibold text-zinc-200"
-              >
+              <label className="block text-sm font-semibold text-zinc-200">
                 Password
               </label>
               <input
                 type="password"
                 className="block w-full px-4 py-2 mt-2 text-zinc-700 bg-white border rounded-md focus:border-zinc-400 focus:ring-zinc-300 focus:outline-none focus:ring focus:ring-opacity-40"
                 placeholder="Your password"
+                onChange={(e) => {
+                  this.setPasscode(e.target.value);
+                }}
               />
             </div>
             <a href="#" className="text-xs text-zinc-500 hover:text-zinc-200">
               Forget Password?
             </a>
             <div className="mt-6">
-              <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-zinc-600 rounded-md hover:bg-zinc-400 hover:text-zinc-900 focus:outline-none focus:bg-zinc-600">
+              <button
+                className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-zinc-600 rounded-md hover:bg-zinc-400 hover:text-zinc-900 focus:outline-none focus:bg-zinc-600"
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.login();
+                }}
+              >
                 Sign in
               </button>
             </div>
@@ -58,6 +115,14 @@ class SignIn extends React.Component {
             </Link>
           </p>
         </div>
+        <Modal
+          isOpen={this.state.modalOn}
+          header={this.state.modalHeader}
+          body={this.state.modalBody}
+          close={() => {
+            this.setState({ modalOn: false });
+          }}
+        />
       </div>
     );
   }
