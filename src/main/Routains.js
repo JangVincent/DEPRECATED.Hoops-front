@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { createApi } from "unsplash-js";
 
 export default function Routains() {
-  const [routains, setRoutains] = useState([
+  const testRoutains = [
     {
       name: "Breakfast Routain",
       numberOfAtoms: 6,
@@ -43,7 +44,33 @@ export default function Routains() {
       coverImg:
         "https://images.unsplash.com/photo-1426543881949-cbd9a76740a4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
     },
-  ]);
+  ];
+  const [routains, setRoutains] = useState(testRoutains);
+
+  const unsplash = createApi({
+    accessKey: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
+  });
+
+  async function fetchCoverImg() {
+    const res = await unsplash.photos.getRandom({
+      count: routains.length,
+    });
+
+    if (!res.errors) {
+      const response = res.response;
+
+      for (let i in testRoutains) {
+        testRoutains[i].coverImg = response[i].urls.raw;
+      }
+
+      setRoutains(testRoutains);
+      console.log(routains);
+    }
+  }
+
+  useEffect(() => {
+    fetchCoverImg();
+  }, []);
 
   return (
     <div className="relative grid overflow-hidden h-full bg-zinc-600 mx-6 rounded grid-cols-5 mt-10 pb-10 pt-10">
@@ -69,14 +96,14 @@ export default function Routains() {
             </div>
             <div className="px-6 pt-4 pb-2">
               {/* <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                #photography
-              </span>
-              <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                #travel
-              </span>
-              <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                #winter
-              </span> */}
+              #photography
+            </span>
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+              #travel
+            </span>
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+              #winter
+            </span> */}
             </div>
           </Link>
         );
