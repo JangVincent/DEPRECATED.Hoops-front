@@ -9,7 +9,7 @@ class Introduction extends React.Component {
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 sm:static">
             <div className="sm:max-w-lg">
               <h1 className="text-4xl font font-extrabold tracking-tight text-zinc-100 sm:text-6xl">
-                Keep your routain with Routainer
+                Keep your routain with HOOPs
               </h1>
               <p className="mt-4 text-xl text-zinc-400">
                 Many peoples consider about daily routain for their health,

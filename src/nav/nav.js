@@ -40,7 +40,7 @@ class NavBar extends React.Component {
                   className="text-xl font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"
                   to="/"
                 >
-                  The Routainer
+                  The HOOPs
                 </Link>
                 <button
                   className="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
