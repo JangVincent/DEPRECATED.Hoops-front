@@ -36,7 +36,6 @@ export default function SignIn() {
         passcode: passcode,
       })
       .then((res) => {
-        console.log(res.data.data.token);
         window.sessionStorage.setItem("hoops-token", res.data.data.token);
         dispatch(login());
         navigation("/");
