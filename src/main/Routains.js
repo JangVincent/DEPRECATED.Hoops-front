@@ -1,6 +1,8 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { createApi } from "unsplash-js";
+import packageJson from "../../package.json";
 
 export default function Routains() {
   const testRoutains = [
@@ -45,40 +47,72 @@ export default function Routains() {
         "https://images.unsplash.com/photo-1426543881949-cbd9a76740a4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
     },
   ];
+
   const [routains, setRoutains] = useState(testRoutains);
 
   const unsplash = createApi({
     accessKey: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
   });
 
-  async function fetchCoverImg() {
-    const res = await unsplash.photos.getRandom({
-      count: routains.length,
-    });
+  useEffect(() => {
+    async function fetchCoverImg(count) {
+      if (count == 0) return [];
 
-    if (!res.errors) {
-      const response = res.response;
+      const res = await unsplash.photos.getRandom({
+        count: count,
+      });
 
-      for (let i in testRoutains) {
-        testRoutains[i].coverImg = response[i].urls.raw;
+      if (!res.errors) {
+        const response = res.response;
+
+        return Array.isArray(response)
+          ? response.map((v) => {
+              return v.urls.raw;
+            })
+          : [response.urls.raw];
+      }
+    }
+
+    async function fetchRoutains() {
+      const res = await axios.get(
+        packageJson.apiServer + "/routain/get_routain_list",
+        {
+          headers: {
+            Authorization: `Bearer ${window.sessionStorage.getItem(
+              "hoops-token"
+            )}`,
+          },
+        }
+      );
+
+      return res.data.data.routainList;
+    }
+
+    async function makePhotoRoutainList() {
+      const routainList = await fetchRoutains();
+      const photoList = await fetchCoverImg(routainList.length);
+
+      for (let i in routainList) {
+        routainList[i]["coverImg"] = photoList[i];
+        routainList[i]["numberOfAtoms"] =
+          routainList[i]["atomOrderString"].split(",").length;
       }
 
-      setRoutains(testRoutains);
-      console.log(routains);
-    }
-  }
+      console.log(routainList);
 
-  useEffect(() => {
-    fetchCoverImg();
+      setRoutains(routainList);
+    }
+
+    makePhotoRoutainList();
   }, []);
 
   return (
     <div className="relative grid overflow-hidden h-full bg-zinc-600 mx-6 rounded grid-cols-5 mt-10 pb-10 pt-10">
-      {routains.map((v, index) => {
+      {routains.map((v) => {
         return (
           <Link
             to="/"
-            key={index}
+            key={v.id}
             className="rounded overflow-hidden shadow-lg bg-zinc-900 mr-10 ml-10 h-fit hover:bg-zinc-800 focus:outline-none hover:cursor-pointer"
           >
             <img className="w-full" src={v.coverImg} />
@@ -86,9 +120,7 @@ export default function Routains() {
               <div className="font-bold text-xl mb-2 text-zinc-300">
                 {v.name}
               </div>
-              <p className="text-gray-500 text-base text-left">
-                {v.description}
-              </p>
+              <p className="text-gray-500 text-base text-left">{v.name}</p>
               <p className="text-gray-300 text-base mt-3">
                 {v.numberOfAtoms}{" "}
                 <span className="text-gray-600">of Atoms included</span>
