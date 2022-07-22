@@ -1,15 +1,34 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { SearchIcon } from "@heroicons/react/outline";
+import packageJson from "../../package.json";
 
 export default function Atoms() {
-  const [atoms, setAtoms] = useState([
-    { name: "Drink water", duration: 5 },
-    { name: "Take shower", duration: 15 },
-    { name: "Listen Jazz Music", duration: 60 },
-    { name: "Study React", duration: 240 },
-  ]);
+  const [atoms, setAtoms] = useState([]);
 
-  const [viewAtoms, setViewAtoms] = useState(atoms);
+  useEffect(() => {
+    async function getAtomList() {
+      const res = await axios.get(
+        packageJson.apiServer + "/atom/get_atom_list",
+        {
+          headers: {
+            Authorization: `Bearer ${window.sessionStorage.getItem(
+              "hoops-token"
+            )}`,
+          },
+        }
+      );
+
+      const atomList = res.data.data.totalAtomList;
+
+      setAtoms(atomList ? atomList : []);
+    }
+
+    getAtomList();
+  }, []);
+
+  const [viewMustAtoms, setViewMustAtoms] = useState([]);
+  const [viewWantAtoms, setViewWantAtoms] = useState([]);
 
   const atomItemClassList =
     "px-5 py-2 mt-5 mb-5 mr-10 ml-10 rounded overflow-hidden shadow-lg bg-zinc-900 text-zinc-400 hover:bg-zinc-800 hover:cursor-pointer hover:text-zinc-200";
@@ -17,11 +36,19 @@ export default function Atoms() {
   const filterAtomList = (e) => {
     const search = e.target.value;
     const reg = new RegExp(search, "gi");
-    setViewAtoms(atoms.filter((v) => reg.test(v.name)));
+
+    setViewMustAtoms(
+      atoms.filter((v) => reg.test(v.text) && v.type === "MUST")
+    );
+
+    setViewWantAtoms(
+      atoms.filter((v) => reg.test(v.text) && v.type === "WANT")
+    );
   };
 
   useEffect(() => {
-    setViewAtoms(atoms);
+    setViewMustAtoms(atoms.filter((v) => v.type === "MUST"));
+    setViewWantAtoms(atoms.filter((v) => v.type === "WANT"));
   }, [atoms]);
 
   return (
@@ -41,34 +68,46 @@ export default function Atoms() {
         MUST TO DO :
       </p>
       <div className="grid grid-cols-4">
-        {viewAtoms.map((v, i) => (
-          <div key={i} className={atomItemClassList}>
-            <p className="text-left text-base mb-3">{v.name}</p>
-            <p className="text-gray-500 text-sm text-left">
-              Duration :
-              {v.duration >= 60
-                ? v.duration / 60 + " hour"
-                : v.duration + " min"}
-            </p>
-          </div>
-        ))}
+        {viewMustAtoms.length > 0 ? (
+          viewMustAtoms.map((v, i) => (
+            <div key={v.id} className={atomItemClassList}>
+              <p className="text-left text-base mb-3">{v.text}</p>
+              <p className="text-gray-500 text-sm text-left">
+                Duration :
+                {v.duration >= 60
+                  ? v.duration / 60 + " hour"
+                  : v.duration + " min"}
+              </p>
+            </div>
+          ))
+        ) : (
+          <p className="mt-3 text-zinc-800 font-bold text-sm text-left ml-10 pl-5">
+            Routain is not exist.
+          </p>
+        )}
       </div>
 
       <p className="mt-5 text-zinc-300 font-bold text-xl text-left ml-10">
         WANT TO DO :
       </p>
       <div className="grid grid-cols-4">
-        {viewAtoms.map((v, i) => (
-          <div key={i} className={atomItemClassList}>
-            <p className="text-left text-base mb-3">{v.name}</p>
-            <p className="text-gray-500 text-sm text-left">
-              Duration :
-              {v.duration >= 60
-                ? v.duration / 60 + " hour"
-                : v.duration + " min"}
-            </p>
-          </div>
-        ))}
+        {viewWantAtoms.length > 0 ? (
+          viewWantAtoms.map((v, i) => (
+            <div key={v.id} className={atomItemClassList}>
+              <p className="text-left text-base mb-3">{v.text}</p>
+              <p className="text-gray-500 text-sm text-left">
+                Duration :
+                {v.duration >= 60
+                  ? v.duration / 60 + " hour"
+                  : v.duration + " min"}
+              </p>
+            </div>
+          ))
+        ) : (
+          <p className="mt-3 text-zinc-800 font-bold text-sm text-left ml-10 pl-5">
+            Routain is not exist.
+          </p>
+        )}
       </div>
     </div>
   );
