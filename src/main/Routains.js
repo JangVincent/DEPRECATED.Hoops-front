@@ -5,50 +5,7 @@ import { createApi } from "unsplash-js";
 import packageJson from "../../package.json";
 
 export default function Routains() {
-  const testRoutains = [
-    {
-      name: "Breakfast Routain",
-      numberOfAtoms: 6,
-      description:
-        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout",
-      coverImg:
-        "https://images.unsplash.com/photo-1658093180204-fd48aa384ebc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
-    },
-    {
-      name: "Work Routain",
-      numberOfAtoms: 3,
-      description:
-        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout",
-      coverImg:
-        "https://images.unsplash.com/photo-1657299170207-d6df52b27811?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-    },
-    {
-      name: "Study Routain",
-      numberOfAtoms: 5,
-      description:
-        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout",
-      coverImg:
-        "https://images.unsplash.com/photo-1658128776272-f7ca7a98f8d5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-    },
-    {
-      name: "Weekend Routain",
-      numberOfAtoms: 11,
-      description:
-        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout",
-      coverImg:
-        "https://images.unsplash.com/photo-1658064273537-84ae941402b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80",
-    },
-    {
-      name: "Before Date Routain",
-      numberOfAtoms: 11,
-      description:
-        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout",
-      coverImg:
-        "https://images.unsplash.com/photo-1426543881949-cbd9a76740a4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-    },
-  ];
-
-  const [routains, setRoutains] = useState(testRoutains);
+  const [routains, setRoutains] = useState([]);
 
   const unsplash = createApi({
     accessKey: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
