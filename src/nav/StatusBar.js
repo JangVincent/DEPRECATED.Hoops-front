@@ -14,7 +14,7 @@ export default function StatusBar() {
   const [atomList, setAtomList] = useState(null);
   const [runningAtomIndex, setRunningAtomIndex] = useState(0);
   const [runningAtom, setRunningAtom] = useState(initialRunningAtom);
-  const [sec, setSec] = useState(0);
+  const [timerFlag, setTimerFlag] = useState(true);
 
   useEffect(() => {
     async function getRoutain() {
@@ -39,44 +39,23 @@ export default function StatusBar() {
     getRoutain();
   }, []);
 
-  const timer = {
-    atomTimer: null,
-    secTimer: null,
-  };
-  let t_sec = 0;
-
   const atomStart = (atomIndex) => {
     if (atomIndex < atomList.length) {
       // 실행 중 아톰 갱신
       setRunningAtomIndex(atomIndex);
       setRunningAtom(atomList[runningAtomIndex]);
-
-      // 타이머 설정
-      timer.atomTimer = setTimeout(() => {
-        atomStart(atomIndex++);
-      }, atomList[atomIndex].duration);
     }
   };
   const routainStart = () => {
     console.log("Routain start");
-
     if (atomList.length > 0) {
       atomStart(0);
-      timer.secTimer = setInterval(function () {
-        console.log(timerFlag);
-        if (timerFlag) {
-          setSec(t_sec + 1);
-          t_sec++;
-        }
-      }, 1000);
     }
   };
 
   const routainStop = () => {
     console.log("Routain stopped");
     setTimerFlag(false);
-    clearTimeout(timer.atomTimer);
-    clearInterval(timer.secTimer);
     setRunningAtomIndex(0);
     setRunningAtom(initialRunningAtom);
   };
@@ -98,11 +77,7 @@ export default function StatusBar() {
         ""
       )}
 
-      {routain ? (
-        <RoutainVisualizer atom={runningAtom} second={sec / 60} />
-      ) : (
-        ""
-      )}
+      {routain ? <RoutainVisualizer atom={runningAtom} flag={timerFlag} /> : ""}
     </div>
   );
 }

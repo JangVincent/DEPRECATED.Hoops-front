@@ -1,5 +1,6 @@
-export default function RoutainVisualizer({ atom, second }) {
-  console.log(atom, second);
+export default function RoutainVisualizer({ atom, flag }) {
+  // 타이머를 비주얼라이저가 담당하도록 개발할 것
+  console.log(atom, flag);
 
   const convertTimeString = (duration) => {
     let front = parseInt(duration / 1).toString();
