@@ -24,4 +24,4 @@ yarn-error.log*
 
 #setting files
 CMANE
-.env
+.env*

@@ -13,11 +13,15 @@ import SignUp from "./auth/SignUp";
 
 /* Libraries */
 import { Routes, Route, Link } from "react-router-dom";
+import StatusBar from "./nav/StatusBar";
+import { useSelector } from "react-redux";
 
 export default function App() {
+  const loggedIn = useSelector((state) => state.loggedIn.value);
   return (
     <div className="App">
       <Navbar />
+      {loggedIn ? <StatusBar /> : ""}
       <Routes>
         <Route path="/" element={<Introduction />}></Route>
         <Route path="/routains" element={<Routains />}></Route>
