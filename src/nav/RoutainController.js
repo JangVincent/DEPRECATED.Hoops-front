@@ -1,23 +1,33 @@
-export default function RoutainController() {
+export default function RoutainController({ start, stop }) {
   return (
-    <div className="flex lg:flex-grow items-center">
-      <ul className="flex flex-col list-none ml-auto">
-        <li className="px-3 py-0.5 flex items-center text-xs font-bold leading-snug text-white hover:opacity-75">
+    <div className="flex lg:flex items-left ml-5 inline-block">
+      <ul className="flex flex-row list-none ml-auto">
+        <li
+          className="px-3 py-0.5 flex items-center text-xs font-bold leading-snug text-white hover:opacity-75"
+          onClick={() => {
+            start(1);
+          }}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            classList="h-5 w-5"
+            class="h-5 w-5"
             viewBox="0 0 20 20"
             fill="currentColor"
           >
             <path
-              fill-rule="evenodd"
+              fillRule="evenodd"
               d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-              clip-rule="evenodd"
+              clipRule="evenodd"
             />
           </svg>
         </li>
 
-        <li className="px-3 py-0.5 flex items-center text-xs font-bold leading-snug text-white hover:opacity-75">
+        <li
+          className="px-3 py-0.5 flex items-center text-xs font-bold leading-snug text-white hover:opacity-75"
+          onClick={() => {
+            stop();
+          }}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-5 w-5"
