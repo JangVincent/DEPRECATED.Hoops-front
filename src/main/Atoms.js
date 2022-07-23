@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { SearchIcon } from "@heroicons/react/outline";
-import packageJson from "../../package.json";
 
 export default function Atoms() {
   const [atoms, setAtoms] = useState([]);
@@ -9,7 +8,7 @@ export default function Atoms() {
   useEffect(() => {
     async function getAtomList() {
       const res = await axios.get(
-        packageJson.apiServer + "/atom/get_atom_list",
+        process.env.REACT_APP_API_SERVER_DOMAIN + "/atom/get_atom_list",
         {
           headers: {
             Authorization: `Bearer ${window.sessionStorage.getItem(

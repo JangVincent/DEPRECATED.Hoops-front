@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import packageJson from "../../package.json";
 import Modal from "../commons/Modal";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
@@ -31,7 +30,7 @@ export default function SignIn() {
     // }
 
     axios
-      .post(packageJson.apiServer + "/auth/signin", {
+      .post(process.env.REACT_APP_API_SERVER_DOMAIN + "/auth/signin", {
         id: id,
         passcode: passcode,
       })

@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { createApi } from "unsplash-js";
-import packageJson from "../../package.json";
 
 export default function Routains() {
   const [routains, setRoutains] = useState([]);
@@ -32,7 +31,7 @@ export default function Routains() {
 
     async function fetchRoutains() {
       const res = await axios.get(
-        packageJson.apiServer + "/routain/get_routain_list",
+        process.env.REACT_APP_API_SERVER_DOMAIN + "/routain/get_routain_list",
         {
           headers: {
             Authorization: `Bearer ${window.sessionStorage.getItem(
