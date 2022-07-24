@@ -7,7 +7,7 @@ export default function Introduction() {
 
   return (
     <div className="relative bg-black overflow-hidden px-6 mt-10">
-      <div className="pt-16 pb-80 sm:pt-24 sm:pb-40 lg:pt-40 lg:pb-48 bg-zinc-600 rounded">
+      <div className="pt-16 pb-80 sm:pt-24 sm:pb-40 lg:pt-40 lg:pb-48 bg-zinc-900 rounded">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 sm:static">
           <div className="sm:max-w-lg">
             <h1 className="text-4xl font font-extrabold tracking-tight text-zinc-100 sm:text-6xl">
