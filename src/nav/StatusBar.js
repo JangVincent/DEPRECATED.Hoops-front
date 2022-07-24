@@ -117,7 +117,7 @@ export default function StatusBar() {
   };
 
   return (
-    <div className="mb-2 px-6">
+    <div className="px-6">
       <div className="text-sm font-bold leading-relaxed text-zinc-400 flex justify-center">
         <div className="mt-[4px]">
           <span className="text-zinc-400">Routain : </span>
