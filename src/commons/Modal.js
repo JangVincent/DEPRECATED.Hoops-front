@@ -67,6 +67,7 @@ export default function Modal(props) {
                       className="ml-3 w-full inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-blue-300 text-base font-medium text-zinc-800 sm:w-auto sm:text-sm"
                       onClick={() => {
                         accept();
+                        close();
                       }}
                     >
                       Accept

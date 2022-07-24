@@ -73,10 +73,10 @@ export default function RoutainVisualizer({ atom, flag, atomNext }) {
   }, [flag, atom]);
 
   return (
-    <div className="flex inline-block lg:flex-grow">
+    <div className="">
       <div
         id="progress-outer"
-        className="flex inline-block bg-zinc-400 h-1 w-72 mt-2.5 ml-2"
+        className="flex bg-zinc-400 h-1 w-72 mt-2.5 ml-2"
       >
         <div
           id="progress-inner"
@@ -84,15 +84,18 @@ export default function RoutainVisualizer({ atom, flag, atomNext }) {
           style={{ width: timeWidth + "px" }}
         ></div>
       </div>
-      <div id="time-wrapper" className="inline-block text-bold ml-5">
-        <span className="text-white">{atom.text}</span>
-        <span id="play-time" className="text-white ml-3">
+      <div
+        id="time-wrapper"
+        className="flex text-bold ml-5 justify-center mt-2 mb-2"
+      >
+        <span className="text-white text-xs">{atom.text}</span>
+        <span id="play-time" className="text-white ml-3 text-xs">
           {convertTimeString(time, "s")}
         </span>
-        <span id="time-divider" className="text-white mx-2">
+        <span id="time-divider" className="text-white mx-2 text-xs">
           /
         </span>
-        <span id="duration-time" className="text-white">
+        <span id="duration-time" className="text-white text-xs">
           {convertTimeString(atom.duration, "m")}
         </span>
       </div>
