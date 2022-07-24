@@ -60,11 +60,11 @@ export default function Modal(props) {
                     </div>
                   </div>
                 </div>
-                <div className="bg-zinc-600 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <div className="bg-zinc-600 px-4 py-3 sm:px-6 flex flex-row-reverse">
                   {accept ? (
                     <button
                       type="button"
-                      className="ml-3 w-full inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-blue-300 text-base font-medium text-zinc-800 sm:w-auto sm:text-sm"
+                      className="ml-3 inline-flex justify-center rounded-md shadow-sm px-2 py-2 bg-blue-300 text-base font-medium text-zinc-800 sm:w-20 sm:text-sm"
                       onClick={() => {
                         accept();
                         close();
@@ -79,7 +79,7 @@ export default function Modal(props) {
                   {deny ? (
                     <button
                       type="button"
-                      className="ml-3 w-full inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-red-300 text-base font-medium text-zinc-800 sm:w-auto sm:text-sm"
+                      className="ml-3 inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-red-300 text-base font-medium text-zinc-800 sm:w-20 sm:text-sm"
                       onClick={() => {
                         deny();
                       }}
@@ -93,7 +93,7 @@ export default function Modal(props) {
                   {close ? (
                     <button
                       type="button"
-                      className="w-full inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-zinc-100 text-base font-medium text-zinc-800 sm:w-auto sm:text-sm"
+                      className="ml-3 inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-zinc-100 text-base font-medium text-zinc-800 sm:w-20 sm:text-sm"
                       onClick={() => {
                         close();
                       }}
