@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import RoutainController from "./RoutainController";
 import RoutainVisualizer from "./RoutainVisualizer";
 
@@ -8,13 +8,15 @@ export default function StatusBar() {
     text: "-",
     duration: 0,
   };
-  const initalRoutain = { name: "-" };
 
-  const [routain, setRoutain] = useState(initalRoutain);
+  const [routain, setRoutain] = useState({});
   const [atomList, setAtomList] = useState(null);
+
   const [runningAtomIndex, setRunningAtomIndex] = useState(0);
   const [runningAtom, setRunningAtom] = useState(initialRunningAtom);
-  const [timerFlag, setTimerFlag] = useState(true);
+  const [timerFlag, setTimerFlag] = useState(false);
+
+  const runningAtomIndexRef = useRef(0);
 
   useEffect(() => {
     async function getRoutain() {
@@ -30,7 +32,6 @@ export default function StatusBar() {
       );
 
       if (res) {
-        console.log(res);
         setRoutain(res.data.data.routain);
         setAtomList(res.data.data.routain_atom_list);
       }
@@ -40,16 +41,30 @@ export default function StatusBar() {
   }, []);
 
   const atomStart = (atomIndex) => {
+    // 실행 중 아톰 갱신
     if (atomIndex < atomList.length) {
-      // 실행 중 아톰 갱신
       setRunningAtomIndex(atomIndex);
-      setRunningAtom(atomList[runningAtomIndex]);
+      setRunningAtom(atomList[atomIndex]);
     }
   };
+
+  const atomNext = () => {
+    console.log("AtomNext excuted");
+
+    runningAtomIndexRef.current += 1;
+
+    if (runningAtomIndexRef.current < atomList.length) {
+      atomStart(runningAtomIndexRef.current);
+    } else {
+      routainStop();
+    }
+  };
+
   const routainStart = () => {
     console.log("Routain start");
     if (atomList.length > 0) {
       atomStart(0);
+      setTimerFlag(true);
     }
   };
 
@@ -58,10 +73,6 @@ export default function StatusBar() {
     setTimerFlag(false);
     setRunningAtomIndex(0);
     setRunningAtom(initialRunningAtom);
-  };
-
-  const routainPause = () => {
-    console.log("pause");
   };
 
   return (
@@ -77,7 +88,15 @@ export default function StatusBar() {
         ""
       )}
 
-      {routain ? <RoutainVisualizer atom={runningAtom} flag={timerFlag} /> : ""}
+      {routain ? (
+        <RoutainVisualizer
+          atom={runningAtom}
+          flag={timerFlag}
+          atomNext={atomNext}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 }
