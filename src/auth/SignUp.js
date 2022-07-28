@@ -88,7 +88,7 @@ export default function SignUp() {
               for="password"
               className="block text-sm font-semibold text-zinc-200"
             >
-              Email Verification Code
+              Verification Code
             </label>
             <input
               type="text"
@@ -100,7 +100,7 @@ export default function SignUp() {
             />
           </div>
           <a href="#" className="text-sm text-zinc-500 hover:text-zinc-200">
-            Send Verification mail
+            Send Verification Message
           </a>
           <div className="mt-6">
             <div
