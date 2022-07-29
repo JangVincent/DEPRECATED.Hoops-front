@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import Modal from "../commons/Modal";
 
 export default function SignUp() {
-  const [email, setEmail] = useState("");
+  const [idString, setIdString] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
   const [passcode, setPasscode] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
 
@@ -13,16 +14,6 @@ export default function SignUp() {
   const [modalBody, setModalBody] = useState("");
 
   const trySignUp = () => {
-    const emailReg =
-      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-
-    if (!emailReg.test(email)) {
-      setModalHeader("Error Occured!");
-      setModalBody("Please Check your email");
-      setModalOn(true);
-      return;
-    }
-
     const passcodeReg =
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/gi;
     if (!passcodeReg.test(passcode)) {
@@ -41,7 +32,28 @@ export default function SignUp() {
       return;
     }
 
-    //axios.post(process.env.REACT_APP_API_SERVER_DOMAIN + "/auth/signup");
+    axios.post(process.env.REACT_APP_API_SERVER_DOMAIN + "/auth/signup", {
+      id: idString,
+      passcode: passcode,
+      name: "yj",
+      verificationCode: verificationCode,
+      phoneNumber: mobileNumber,
+    });
+  };
+
+  const sendVerificationCode = async () => {
+    console.log(mobileNumber);
+
+    const result = await axios.post(
+      process.env.REACT_APP_API_SERVER_DOMAIN + "/auth/send_verification_sms",
+      {
+        phone: mobileNumber,
+      }
+    );
+
+    // setModalHeader("Error Occured!");
+    // setModalBody("Please Check Verification Code.");
+    // setModalOn(true);
   };
 
   return (
@@ -53,24 +65,24 @@ export default function SignUp() {
         <form className="mt-6">
           <div className="mb-2">
             <label
-              for="email"
-              className="block text-sm font-semibold text-zinc-200"
+              htmlFor="idString"
+              className="block text-lg font-semibold text-zinc-200"
             >
-              Email
+              ID
             </label>
             <input
-              type="email"
+              type="text"
               className="block w-full px-4 py-2 mt-2 text-zinc-700 bg-white border rounded-md focus:border-zinc-400 focus:ring-zinc-300 focus:outline-none focus:ring focus:ring-opacity-40"
-              placeholder="email@example.com"
+              placeholder="Alphabet + Number."
               onChange={(e) => {
-                setEmail(e.target.value);
+                setIdString(e.target.value);
               }}
             />
           </div>
           <div className="mb-10">
             <label
-              for="password"
-              className="block text-sm font-semibold text-zinc-200"
+              htmlFor="password"
+              className="block text-lg font-semibold text-zinc-200"
             >
               Passcode
             </label>
@@ -85,8 +97,33 @@ export default function SignUp() {
           </div>
           <div className="mb-2">
             <label
-              for="password"
-              className="block text-sm font-semibold text-zinc-200"
+              htmlFor="text"
+              className="block text-lg font-semibold text-zinc-200"
+            >
+              Phone Number
+            </label>
+            <input
+              type="text"
+              className="block w-full px-4 py-2 mt-2 text-zinc-700 bg-white border rounded-md focus:border-zinc-400 focus:ring-zinc-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              placeholder="Your Mobile Phone Number"
+              onChange={(e) => {
+                setMobileNumber(e.target.value);
+              }}
+            />
+            <div
+              className="mb-10 mt-5"
+              onClick={() => {
+                sendVerificationCode();
+              }}
+            >
+              <label className="text-sm text-white hover:text-zinc-200 border rounded-md px-4 py-2 cursor-pointer">
+                Send Code
+              </label>
+            </div>
+
+            <label
+              htmlFor="password"
+              className="block text-lg font-semibold text-zinc-200"
             >
               Verification Code
             </label>
@@ -99,12 +136,10 @@ export default function SignUp() {
               }}
             />
           </div>
-          <a href="#" className="text-sm text-zinc-500 hover:text-zinc-200">
-            Send Verification Message
-          </a>
+
           <div className="mt-6">
             <div
-              className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-zinc-600 rounded-md hover:bg-zinc-400 hover:text-zinc-900 focus:outline-none focus:bg-zinc-600"
+              className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-zinc-600 rounded-md hover:bg-zinc-400 hover:text-zinc-900 focus:outline-none focus:bg-zinc-600 cursor-pointer"
               onClick={() => {
                 trySignUp();
               }}
