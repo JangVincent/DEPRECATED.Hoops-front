@@ -35,8 +35,7 @@ export default function StatusBar() {
       // 루틴 불러오기
       try {
         res = await axios.get(
-          process.env.REACT_APP_API_SERVER_DOMAIN +
-            "/routain/get_is_use_routain",
+          process.env.REACT_APP_API_SERVER_DOMAIN + "/routain/get_use_routain",
           {
             headers: {
               Authorization: `Bearer ${window.sessionStorage.getItem(
