@@ -19,32 +19,25 @@ export default function SignIn() {
   const [modalHeader, setModalHeader] = useState("");
   const [modalBody, setModalBody] = useState("");
 
-  const tryLogin = () => {
-    // const emailReg =
-    //   /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-    // if (!emailReg.test(id)) {
-    //   setModalHeader("Error Occured!");
-    //   setModalBody("Please Check your email");
-    //   setModalOn(true);
-    //   return;
-    // }
+  const tryLogin = async () => {
+    try {
+      const res = await axios.post(
+        process.env.REACT_APP_API_SERVER_DOMAIN + "/auth/signin",
+        {
+          id: id,
+          passcode: passcode,
+        }
+      );
 
-    axios
-      .post(process.env.REACT_APP_API_SERVER_DOMAIN + "/auth/signin", {
-        id: id,
-        passcode: passcode,
-      })
-      .then((res) => {
-        window.sessionStorage.setItem("hoops-token", res.data.data.token);
-        dispatch(login());
-        navigation("/");
-      })
-      .catch((err) => {
-        console.log(err);
-        setModalHeader("Error Occured!");
-        setModalBody(err.response.data.message.join(", "));
-        setModalOn(true);
-      });
+      window.sessionStorage.setItem("hoops-token", res.data.data.token);
+      dispatch(login());
+      navigation("/");
+    } catch (e) {
+      console.log(e.response.data);
+      setModalHeader("Error Occured!");
+      setModalBody(e.response.data.message);
+      setModalOn(true);
+    }
   };
 
   return (
@@ -56,7 +49,7 @@ export default function SignIn() {
         <form className="mt-6">
           <div className="mb-2">
             <label className="block text-sm font-semibold text-zinc-200">
-              Email
+              ID
             </label>
             <input
               type="email"

@@ -1,7 +1,8 @@
-import axios from "axios";
+import axios, { Axios } from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Modal from "../commons/Modal";
+import { useNavigate } from "react-router";
 
 export default function SignUp() {
   const [idString, setIdString] = useState("");
@@ -13,7 +14,9 @@ export default function SignUp() {
   const [modalHeader, setModalHeader] = useState("");
   const [modalBody, setModalBody] = useState("");
 
-  const trySignUp = () => {
+  const navigation = useNavigate();
+
+  const trySignUp = async () => {
     const passcodeReg =
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/gi;
     if (!passcodeReg.test(passcode)) {
@@ -32,28 +35,41 @@ export default function SignUp() {
       return;
     }
 
-    axios.post(process.env.REACT_APP_API_SERVER_DOMAIN + "/auth/signup", {
-      id: idString,
-      passcode: passcode,
-      name: "yj",
-      verificationCode: verificationCode,
-      phoneNumber: mobileNumber,
-    });
+    try {
+      const result = await axios.post(
+        process.env.REACT_APP_API_SERVER_DOMAIN + "/auth/signup",
+        {
+          id: idString,
+          passcode: passcode,
+          name: "yj",
+          verificationCode: verificationCode,
+          phoneNumber: mobileNumber,
+        }
+      );
+
+      if (result.data.dta.status == 201) {
+        alert("Sign up success. Please Login.");
+        navigation("/signin");
+      }
+    } catch (e) {
+      console.log(e.response.data);
+      setModalHeader("Error Occured!");
+      setModalBody(e.response.data.message);
+      setModalOn(true);
+    }
   };
 
   const sendVerificationCode = async () => {
-    console.log(mobileNumber);
-
-    const result = await axios.post(
-      process.env.REACT_APP_API_SERVER_DOMAIN + "/auth/send_verification_sms",
-      {
-        phone: mobileNumber,
-      }
-    );
-
-    // setModalHeader("Error Occured!");
-    // setModalBody("Please Check Verification Code.");
-    // setModalOn(true);
+    try {
+      const result = await axios.post(
+        process.env.REACT_APP_API_SERVER_DOMAIN + "/auth/send_verification_sms",
+        {
+          phone: mobileNumber,
+        }
+      );
+    } catch (e) {
+      console.log(e.response.data);
+    }
   };
 
   return (
