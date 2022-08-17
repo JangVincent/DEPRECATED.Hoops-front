@@ -45,12 +45,17 @@ export default function StatusBar() {
           }
         );
 
-        setRoutain(res.data.data.routain);
-        setAtomList(res.data.data.routain_atom_list);
+        if(!res.data.data) {
+          throw 'Routain is un-defined'
+        } else {
+          setRoutain(res.data.data.routain);
+          setAtomList(res.data.data.routain_atom_list);
+        }
+        
       } catch (e) {
         console.log(res);
-        setModalHeader("Error Occured!");
-        setModalBody("Routain load Failed. Try again few moments later.");
+        setModalHeader("Routain Error");
+        setModalBody("Please Make Routain or fix a routain");
         setModalOn(true);
       }
     }

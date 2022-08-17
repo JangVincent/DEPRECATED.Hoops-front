@@ -47,7 +47,9 @@ export default function SignUp() {
         }
       );
 
-      if (result.data.dta.status == 201) {
+      console.log(result)
+
+      if (result.data.status == 201) {
         alert("Sign up success. Please Login.");
         navigation("/signin");
       }
@@ -67,6 +69,10 @@ export default function SignUp() {
           phone: mobileNumber,
         }
       );
+
+      setModalHeader("Verification Message sended!");
+      setModalBody("Verication code is sended to your mobile");
+      setModalOn(true);
     } catch (e) {
       console.log(e.response.data);
     }

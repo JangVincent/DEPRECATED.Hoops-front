@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { SearchIcon } from "@heroicons/react/outline";
+import { PlusIcon, SearchIcon } from "@heroicons/react/outline";
 
 export default function Atoms() {
   const [atoms, setAtoms] = useState([]);
@@ -60,8 +60,10 @@ export default function Atoms() {
             filterAtomList(e);
           }}
         ></input>
-        <SearchIcon className="h-6 w-6 text-zinc-300"></SearchIcon>
+        
+        
       </div>
+      <PlusIcon className="h-6 w-6 text-zinc-300"></PlusIcon>
 
       <p className="mt-10 text-zinc-300 font-bold text-xl text-left ml-10">
         MUST TO DO :
@@ -81,7 +83,7 @@ export default function Atoms() {
           ))
         ) : (
           <p className="mt-3 text-zinc-800 font-bold text-sm text-left ml-10 pl-5">
-            Routain is not exist.
+            Atoms not exist.
           </p>
         )}
       </div>
@@ -104,7 +106,7 @@ export default function Atoms() {
           ))
         ) : (
           <p className="mt-3 text-zinc-800 font-bold text-sm text-left ml-10 pl-5">
-            Routain is not exist.
+            Atoms not exist.
           </p>
         )}
       </div>

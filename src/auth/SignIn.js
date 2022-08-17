@@ -54,7 +54,7 @@ export default function SignIn() {
             <input
               type="email"
               className="block w-full px-4 py-2 mt-2 text-zinc-700 bg-white border rounded-md focus:border-zinc-400 focus:ring-zinc-300 focus:outline-none focus:ring focus:ring-opacity-40"
-              placeholder="email@example.com"
+              placeholder="Input ID here"
               onChange={(e) => {
                 setId(e.target.value);
               }}
